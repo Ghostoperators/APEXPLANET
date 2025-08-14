@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Webpage Example</title>
+    <style>
+        /* ===== CSS Styling ===== */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        nav {
+            background-color: #0056b3;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        button {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        footer {
+            text-align: center;
+            background: #333;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <h1>Welcome to My Simple Webpage</h1>
+        <p>Learning HTML, CSS, and JavaScript Basics</p>
+    </header>
+
+    <!--  NAVIGATION  -->
+    <nav>
+        <a href="#about">About</a>
+        <a href="#image">Image</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <section id="about">
+            <h2>About This Page</h2>
+            <p>This webpage is a basic example to demonstrate how to use HTML for structure, CSS for styling, and JavaScript for interactivity. By learning these, you can create beautiful and functional websites.</p>
+        </section>
+
+        <section id="image">
+            <h2>Sample Image</h2>
+            <img src="https://static.vecteezy.com/system/resources/previews/000/267/266/original/vector-landing-page-website-template-with-abstract-low-poly-design.jpg" alt="Sample Image">
+        </section>
+
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <p>Feel free to reach out! @860*******</p>
+            <button type="button" onclick="showMessage()">Click Me!</button>
+        </section>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p>&copy; 2025 My Simple Webpage. All rights reserved.</p>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        function showMessage() {
+            alert("Hello! Thanks for clicking the button 😊");
+        }
+    </script>
+
+</body>
+</html>
