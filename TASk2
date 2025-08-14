@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task 2 – Responsive Form & To-Do List</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background-color: #f4f4f4;
+    }
+
+    /* Navigation (Flexbox) */
+    nav {
+        background-color: #007bff;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        flex-wrap: wrap;
+    }
+    nav h1 {
+        margin: 0;
+        font-size: 20px;
+    }
+    nav ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    nav ul li {
+        margin: 0 10px;
+    }
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    nav ul li a:hover {
+        text-decoration: underline;
+    }
+
+    /* Main layout (CSS Grid) */
+    main {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    section {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    /* Contact Form */
+    form label {
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    form input, form textarea, form button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    form button {
+        background: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-top: 15px;
+    }
+    form button:hover {
+        background: #218838;
+    }
+
+    /* To-Do List */
+    #task-list {
+        list-style: none;
+        padding: 0;
+    }
+    #task-list li {
+        background: #e9ecef;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+    #task-list button {
+        background: red;
+        border: none;
+        color: white;
+        padding: 5px 8px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    #task-list button:hover {
+        background: darkred;
+    }
+
+    /* Feedback message */
+    .feedback {
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+    .success {
+        background-color: #d4edda;
+        color: green;
+    }
+    .error {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    /* Responsive Design */
+    @media(max-width: 768px) {
+        main {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+    <h1>Task 2 Project</h1>
+    <ul>
+        <li><a href="#contact">Contact Form</a></li>
+        <li><a href="#todo">To-Do List</a></li>
+    </ul>
+</nav>
+
+<!-- Main Layout -->
+<main>
+    <!-- Contact Form Section -->
+    <section id="contact">
+        <h2>Contact Form</h2>
+        <form id="contactForm">
+            <label for="name">Name*</label>
+            <input type="text" id="name" required>
+
+            <label for="email">Email*</label>
+            <input type="email" id="email" required>
+
+            <label for="message">Message*</label>
+            <textarea id="message" rows="4" required></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <!-- To-Do List Section -->
+    <section id="todo">
+        <h2>To-Do List</h2>
+        <input type="text" id="task-input" placeholder="Enter a task">
+        <button id="add-task-btn">Add Task</button>
+        <ul id="task-list"></ul>
+    </section>
+</main>
+
+<!-- Extended JavaScript -->
+<script>
+    // ===== CONTACT FORM VALIDATION =====
+    const contactForm = document.getElementById("contactForm");
+    const nameField = document.getElementById("name");
+    const emailField = document.getElementById("email");
+    const messageField = document.getElementById("message");
+
+    // Utility: Show feedback messages
+    function showMessage(message, type = "success") {
+        const msgDiv = document.createElement("div");
+        msgDiv.className = `feedback ${type}`;
+        msgDiv.textContent = message;
+        contactForm.appendChild(msgDiv);
+        setTimeout(() => msgDiv.remove(), 3000);
+    }
+
+    // Email validation regex
+    const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
+
+    // Validate form fields
+    function validateForm() {
+        if (!nameField.value.trim() || !emailField.value.trim() || !messageField.value.trim()) {
+            showMessage("All fields are required!", "error");
+            return false;
+        }
+        if (!emailPattern.test(emailField.value.trim())) {
+            showMessage("Please enter a valid email address!", "error");
+            return false;
+        }
+        return true;
+    }
+
+    // Handle form submission
+    contactForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (validateForm()) {
+            showMessage("Form submitted successfully!");
+            contactForm.reset();
+        }
+    });
+
+    // ===== TO-DO LIST FUNCTIONALITY =====
+    const taskInput = document.getElementById("task-input");
+    const taskList = document.getElementById("task-list");
+    const addTaskBtn = document.getElementById("add-task-btn");
+
+    // Add new task
+    function addTask(taskValue) {
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <span>${taskValue}</span>
+            <button class="delete-btn">X</button>
+        `;
+        taskList.appendChild(li);
+    }
+
+    // Handle add task button click
+    addTaskBtn.addEventListener("click", () => {
+        const value = taskInput.value.trim();
+        if (value) {
+            addTask(value);
+            taskInput.value = "";
+        } else {
+            alert("Please enter a task!");
+        }
+    });
+
+    // Event delegation for removing tasks
+    taskList.addEventListener("click", (e) => {
+        if (e.target.classList.contains("delete-btn")) {
+            e.target.parentElement.remove();
+        }
+    });
+</script>
+
+</body>
+</html>
