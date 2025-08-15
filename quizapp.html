@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quiz App with Timer</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    text-align: center;
+  }
+  header {
+    background: #007bff;
+    color: white;
+    padding: 15px;
+    font-size: 20px;
+  }
+  footer {
+    background: #333;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+  }
+  .quiz-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 30px auto;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+  }
+  button {
+    padding: 8px 15px;
+    border: none;
+    margin: 5px;
+    background: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .correct {
+    color: green;
+    font-weight: bold;
+  }
+  .wrong {
+    color: red;
+    font-weight: bold;
+  }
+  #timer {
+    font-weight: bold;
+    color: red;
+  }
+</style>
+</head>
+<body>
+
+<header>📝 Web Dev Quiz</header>
+
+<div class="quiz-container">
+  <h2 id="question">Question</h2>
+  <div id="options"></div>
+  <p id="result"></p>
+  <p>⏳ Time left: <span id="timer">10</span> seconds</p>
+</div>
+
+<footer>© 2025 Quiz App | Built with ❤️</footer>
+
+<script>
+const quizData = [
+  { question: "What is the capital of France?", options: ["Paris", "London", "Rome"], correct: "Paris" },
+  { question: "Which language is used for web apps?", options: ["Python", "JavaScript", "C++"], correct: "JavaScript" },
+  { question: "What does CSS stand for?", options: ["Creative Style Sheets", "Cascading Style Sheets", "Computer Style Syntax"], correct: "Cascading Style Sheets" },
+  { question: "Which HTML tag is used to display an image?", options: ["&lt;image&gt;", "&lt;img&gt;", "&lt;src&gt;"], correct: "&lt;img&gt;" },
+  { question: "What year was JavaScript created?", options: ["1995", "2000", "1989"], correct: "1995" },
+  { question: "Which property is used in CSS to change text color?", options: ["color", "text-color", "font-color"], correct: "color" },
+  { question: "Which HTML tag is used for a hyperlink?", options: ["&lt;a&gt;", "&lt;link&gt;", "&lt;href&gt;"], correct: "&lt;a&gt;" },
+  { question: "Which company developed JavaScript?", options: ["Netscape", "Microsoft", "Google"], correct: "Netscape" },
+  { question: "Which method is used to print messages in JavaScript console?", options: ["console.log()", "print()", "log.console()"], correct: "console.log()" },
+  { question: "Which HTML tag is used for the largest heading?", options: ["&lt;h1&gt;", "&lt;heading&gt;", "&lt;head&gt;"], correct: "&lt;h1&gt;" }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let timeLeft = 10;
+let timerInterval;
+
+function loadQuestion() {
+  if (currentQuestion >= quizData.length) {
+    document.querySelector(".quiz-container").innerHTML =
+      `<h2>Quiz Finished!</h2>
+       <p>Your score: ${score}/${quizData.length}</p>`;
+    return;
+  }
+
+  const qData = quizData[currentQuestion];
+  document.getElementById("question").textContent = qData.question;
+  let optionsHtml = "";
+  qData.options.forEach(opt => {
+    optionsHtml += `<button onclick="checkAnswer('${opt}')">${opt}</button>`;
+  });
+  document.getElementById("options").innerHTML = optionsHtml;
+  document.getElementById("result").textContent = "";
+  resetTimer();
+}
+
+function checkAnswer(answer) {
+  clearInterval(timerInterval);
+  const correctAnswer = quizData[currentQuestion].correct;
+  if (answer === correctAnswer) {
+    score++;
+    document.getElementById("result").innerHTML = `<span class='correct'>✅ Correct!</span>`;
+  } else {
+    document.getElementById("result").innerHTML = `<span class='wrong'>❌ Wrong!</span> <br> Correct answer: <b>${correctAnswer}</b>`;
+  }
+  setTimeout(() => {
+    currentQuestion++;
+    loadQuestion();
+  }, 1500);
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  timeLeft = 10;
+  document.getElementById("timer").textContent = timeLeft;
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    document.getElementById("timer").textContent = timeLeft;
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      document.getElementById("result").innerHTML = `<span class='wrong'>⏳ Time's up!</span> <br> Correct answer: <b>${quizData[currentQuestion].correct}</b>`;
+      setTimeout(() => {
+        currentQuestion++;
+        loadQuestion();
+      }, 1500);
+    }
+  }, 1000);
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
