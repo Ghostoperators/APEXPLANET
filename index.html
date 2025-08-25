@@ -3,228 +3,191 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Portfolio</title>
+  <title>To-Do List App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <style>
-    /* General Reset */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0f172a;
-      color: #f1f5f9;
-      scroll-behavior: smooth;
-    }
-
-    header {
-      background: #1e293b;
-      padding: 15px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    header h1 {
-      font-size: 1.5rem;
-      color: #38bdf8;
-      font-weight: bold;
-    }
-
-    nav a {
-      margin: 0 15px;
-      text-decoration: none;
-      color: #f1f5f9;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-
-    nav a:hover {
-      color: #38bdf8;
-    }
-
-    /* Hero Section */
-    .hero {
+      background: linear-gradient(135deg, #141e30, #243b55);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      padding: 60px 20px;
+      color: #fff;
+    }
+
+    .app {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+      width: 90%;
+      max-width: 400px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
       text-align: center;
-      animation: fadeIn 2s ease-in-out;
+      margin-bottom: 1.5rem;
+      color: #00f2fe;
+      text-shadow: 0 0 10px #00f2fe;
     }
 
-    .hero img {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      margin-bottom: 20px;
-      border: 4px solid #38bdf8;
-      box-shadow: 0 0 20px rgba(56,189,248,0.7);
+    .input-container {
+      display: flex;
+      margin-bottom: 1.5rem;
     }
 
-    .hero h2 {
-      font-size: 2.5rem;
-      color: #38bdf8;
-      margin-bottom: 15px;
+    input {
+      flex: 1;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 12px 0 0 12px;
+      outline: none;
+      font-size: 1rem;
     }
 
-    .hero p {
-      max-width: 600px;
-      line-height: 1.6;
-      color: #cbd5e1;
-    }
-
-    /* About Section */
-    section {
-      padding: 60px 20px;
-      text-align: center;
-      animation: slideUp 1s ease-in-out;
-    }
-
-    section h2 {
-      font-size: 2rem;
-      color: #38bdf8;
-      margin-bottom: 20px;
-      position: relative;
-    }
-
-    section p {
-      max-width: 700px;
-      margin: 0 auto;
-      line-height: 1.7;
-      color: #cbd5e1;
-    }
-
-    /* Projects */
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-    }
-
-    .project-card {
-      background: #1e293b;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .project-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 25px rgba(56,189,248,0.5);
-    }
-
-    .project-card h3 {
-      color: #38bdf8;
-      margin-bottom: 10px;
-    }
-
-    .project-card p {
-      color: #cbd5e1;
-    }
-
-    /* Contact */
-    .contact a {
-      display: inline-block;
-      margin: 10px;
-      padding: 10px 20px;
-      background: #38bdf8;
-      color: #0f172a;
+    button {
+      padding: 0.8rem 1.2rem;
+      border: none;
+      background: #ff6f61;
+      color: #fff;
       font-weight: bold;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background 0.3s ease;
+      border-radius: 0 12px 12px 0;
+      cursor: pointer;
+      transition: 0.3s;
     }
 
-    .contact a:hover {
-      background: #0ea5e9;
+    button:hover {
+      background: #ff4d4d;
     }
 
-    /* Footer */
-    footer {
-      background: #1e293b;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
-      color: #94a3b8;
+    ul {
+      list-style: none;
+    }
+
+    li {
+      background: #1a1a1a;
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.8rem;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      animation: slideIn 0.5s ease forwards;
+    }
+
+    li.done {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    .delete {
+      background: transparent;
+      border: none;
+      color: #ff4d4d;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .delete:hover {
+      transform: scale(1.2);
     }
 
     /* Animations */
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
     }
 
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Responsive */
-    @media(max-width:768px){
-      .hero h2 { font-size: 2rem; }
-      header h1 { font-size: 1.2rem; }
-      nav a { margin: 0 8px; font-size: 0.9rem; }
+    @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>My Portfolio</h1>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
-
-  <section class="hero">
-    <img src="rishi.jpg" alt="Profile Image">
-    <h2>Hello, I'm Rishi 👋</h2>
-    <p>A passionate Web Developer skilled in HTML, CSS, JavaScript, and modern web technologies. I love building creative, user-friendly, and responsive websites with smooth animations.</p>
-  </section>
-
-  <section id="about">
-    <h2>About Me</h2>
-    <p>I’m a tech enthusiast who enjoys turning ideas into functional web applications. From responsive designs to API integrations, I aim to craft digital experiences that are both efficient and visually engaging.</p>
-  </section>
-
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="projects">
-      <div class="project-card">
-        <h3>Quiz App</h3>
-        <p>An interactive quiz with timer, instant feedback, and results summary.</p>
-      </div>
-      <div class="project-card">
-        <h3>Joke App</h3>
-        <p>Fetches random jokes from a public API with categories and copy option.</p>
-      </div>
-      <div class="project-card">
-        <h3>Product Listing Page</h3>
-        <p>Dynamic product page with filtering, sorting, and smooth animations.</p>
-      </div>
+  <div class="app">
+    <h1>🚀 To-Do List</h1>
+    <div class="input-container">
+      <input type="text" id="taskInput" placeholder="Add a new task...">
+      <button id="addBtn">Add</button>
     </div>
-  </section>
+    <ul id="taskList"></ul>
+  </div>
 
-  <section id="contact" class="contact">
-    <h2>Contact Me</h2>
-    <a href="mailto:rishi@example.com">Email</a>
-    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
-    <a href="https://github.com" target="_blank">GitHub</a>
-  </section>
+  <script>
+    const taskInput = document.getElementById("taskInput");
+    const addBtn = document.getElementById("addBtn");
+    const taskList = document.getElementById("taskList");
 
-  <footer>
-    © 2025 Rishi Kumar | Built with ❤️ using HTML, CSS & JS
-  </footer>
+    // Load tasks from localStorage
+    document.addEventListener("DOMContentLoaded", loadTasks);
+
+    addBtn.addEventListener("click", addTask);
+    taskInput.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") addTask();
+    });
+
+    function addTask() {
+      const task = taskInput.value.trim();
+      if (task === "") return;
+      createTaskElement(task);
+      saveTask(task);
+      taskInput.value = "";
+    }
+
+    function createTaskElement(task, isDone = false) {
+      const li = document.createElement("li");
+      li.textContent = task;
+      if (isDone) li.classList.add("done");
+
+      // Toggle done on click
+      li.addEventListener("click", () => {
+        li.classList.toggle("done");
+        updateStorage();
+      });
+
+      // Delete button
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "✖";
+      delBtn.classList.add("delete");
+      delBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        li.remove();
+        updateStorage();
+      });
+
+      li.appendChild(delBtn);
+      taskList.appendChild(li);
+    }
+
+    function saveTask(task) {
+      const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+      tasks.push({ text: task, done: false });
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function loadTasks() {
+      const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+      tasks.forEach(t => createTaskElement(t.text, t.done));
+    }
+
+    function updateStorage() {
+      const tasks = [];
+      document.querySelectorAll("#taskList li").forEach(li => {
+        tasks.push({ text: li.childNodes[0].textContent, done: li.classList.contains("done") });
+      });
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+  </script>
 </body>
 </html>
-
